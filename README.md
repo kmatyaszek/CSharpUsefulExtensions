@@ -1,2 +1,4 @@
 # CSharpUsefulExtensions
-This library is a collection of useful extensions method in C#.
+This library is a collection of useful extension methods in C#.
+
+## Methods
