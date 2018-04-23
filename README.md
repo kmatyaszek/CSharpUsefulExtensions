@@ -7,3 +7,6 @@ This library is a collection of useful extension methods in C#.
 * IsEmpty
 * IsNullOrEmpty
 * IsNullOrWhiteSpace
+
+### Guid methods:
+* IsEmpty
