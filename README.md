@@ -10,3 +10,9 @@ This library is a collection of useful extension methods in C#.
 
 ### Guid methods:
 * IsEmpty
+
+### DateTime methods:
+* FirstDayOfTheMonth
+* FirstDayOfTheMonthWithTime
+* LastDayOfTheMonth
+* LastDayOfTheMonthWithTime
