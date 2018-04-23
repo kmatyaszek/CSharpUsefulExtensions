@@ -6,7 +6,7 @@ using System.Text;
 namespace CSharpUsefulExtensions.Tests
 {
     [TestFixture]
-    public class StringBuilderExtensions
+    public class StringBuilderExtensionsTests
     {
 		[Test]
         public void IsEmpty_CreateObjectWithDefaultConstructor_ShouldReturnTrue()

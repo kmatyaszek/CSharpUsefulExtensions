@@ -5,7 +5,7 @@ using System;
 namespace CSharpUsefulExtensions.Test
 {
     [TestFixture]
-    public class GuidExtensions
+    public class GuidExtensionsTests
     {
         [Test]
         public void IsEmpty_EmptyGuid_ShouldReturnTrue()
