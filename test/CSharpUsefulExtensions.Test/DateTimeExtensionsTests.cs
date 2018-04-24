@@ -67,5 +67,15 @@ namespace CSharpUsefulExtensions.Test
             result.Should().Be(new DateTime(2018, 4, 30, 12, 12, 12, 12));
         }
 
+        [Test]
+        public void WithTime_GivenTime_ShouldReturnDateTimeWithGivenTime()
+        {
+            var dateTime = new DateTime(2018, 4, 24, 20, 07, 32);
+
+            var result = dateTime.WithTime(21, 15, 10);
+
+            result.Should().Be(new DateTime(2018, 4, 24, 21, 15, 10));
+        }
+
     }
 }

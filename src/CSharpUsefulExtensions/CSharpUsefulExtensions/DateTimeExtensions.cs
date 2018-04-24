@@ -23,5 +23,10 @@ namespace CSharpUsefulExtensions
         {
             return new DateTime(dateTime.Year, dateTime.Month, DateTime.DaysInMonth(dateTime.Year, dateTime.Month), hour, minute, second, millisecond);
         }
+
+        public static DateTime WithTime(this DateTime dateTime, int hour = 0, int minute = 0, int second = 0, int millisecond = 0)
+        {
+            return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, minute, second, millisecond);
+        }
     }
 }
