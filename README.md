@@ -16,3 +16,4 @@ This library is a collection of useful extension methods in C#.
 * FirstDayOfTheMonthWithTime
 * LastDayOfTheMonth
 * LastDayOfTheMonthWithTime
+* WithTime
