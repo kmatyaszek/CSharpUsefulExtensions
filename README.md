@@ -30,8 +30,25 @@ This library is a collection of useful extension methods in C#.
 
 ### StringBuilder methods:
 * IsEmpty
+```
+StringBuilder builder = new StringBuilder();
+
+var isEmpty = builder.IsEmpty(); // isEmpty = true
+```
+
 * IsNullOrEmpty
+```
+StringBuilder builder = null;
+
+var isEmpty = builder.IsNullOrEmpty(); // isEmpty = true
+```
+
 * IsNullOrWhiteSpace
+```
+StringBuilder builder = new StringBuilder("\t\t");
+
+var isEmpty = builder.IsNullOrWhiteSpace(); // isEmpty = true
+```
 
 ### Guid methods:
 * IsEmpty
