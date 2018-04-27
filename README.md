@@ -6,6 +6,8 @@ This library is a collection of useful extension methods in C#.
 ### String methods:
 * Left
 * Right
+* AppendIfMissing
+* PrependIfMissing
 
 ### StringBuilder methods:
 * IsEmpty
