@@ -35,6 +35,11 @@ This library is a collection of useful extension methods in C#.
 
 ### Guid methods:
 * IsEmpty
+```
+Guid guid;
+
+var isEmpty = guid.IsEmpty(); // isEmpty = true
+```
 
 ### DateTime methods:
 * FirstDayOfTheMonth
