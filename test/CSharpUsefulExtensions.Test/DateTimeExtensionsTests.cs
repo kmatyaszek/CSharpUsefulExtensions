@@ -77,5 +77,45 @@ namespace CSharpUsefulExtensions.Test
             result.Should().Be(new DateTime(2018, 4, 24, 21, 15, 10));
         }
 
+        [Test]
+        public void IterateDayByDayTo_StartDateIsGreaterThanEndDate_ShouldReturnEmptyList()
+        {
+            var startDate = new DateTime(2018, 4, 30);
+            var endDate = new DateTime(2017, 4, 29);
+
+            var result = startDate.IterateDayByDayTo(endDate);
+
+            result.Should().BeEmpty();
+        }
+
+        [Test]
+        public void IterateDayByDayTo_StartDateAndEndDateAreEquals_ShouldReturnOnlyOneDay()
+        {
+            var startDate = new DateTime(2018, 4, 30);
+            var endDate = new DateTime(2018, 4, 30);
+
+            var result = startDate.IterateDayByDayTo(endDate);
+
+            result.Should().NotBeEmpty()
+                .And.HaveCount(1)
+                .And.ContainInOrder(new[] { new DateTime(2018, 4, 30) })
+                .And.ContainItemsAssignableTo<DateTime>();
+        }
+
+        [Test]
+        public void IterateDayByDayTo_StartDateEquals1April2018AndEndDateEquals7April2018_ShouldReturn7Days()
+        {
+            var startDate = new DateTime(2018, 4, 1);
+            var endDate = new DateTime(2018, 4, 7);
+
+            var result = startDate.IterateDayByDayTo(endDate);
+
+            result.Should().NotBeEmpty()
+                .And.HaveCount(7)
+                .And.ContainInOrder(new[] { new DateTime(2018, 4, 1), new DateTime(2018, 4, 2), new DateTime(2018, 4, 3), new DateTime(2018, 4, 4),
+                    new DateTime(2018, 4, 5), new DateTime(2018, 4, 6), new DateTime(2018, 4, 7) })
+                .And.ContainItemsAssignableTo<DateTime>();
+        }
+
     }
 }

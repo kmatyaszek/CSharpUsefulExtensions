@@ -83,3 +83,12 @@ new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonthWithTime(12, 12, 12, 
 ```
 new DateTime(2018, 4, 24, 20, 07, 32).WithTime(21, 15, 10) = DateTime(2018, 4, 24, 21, 15, 10)
 ```
+
+* IterateDayByDayTo
+```
+var startDate = new DateTime(2018, 4, 1);
+var endDate = new DateTime(2018, 4, 7);
+
+var result = startDate.IterateDayByDayTo(endDate);
+// result = { new DateTime(2018, 4, 1), new DateTime(2018, 4, 2), new DateTime(2018, 4, 3), new DateTime(2018, 4, 4), new DateTime(2018, 4, 5), new DateTime(2018, 4, 6), new DateTime(2018, 4, 7) }
+```

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CSharpUsefulExtensions
 {
@@ -27,6 +28,19 @@ namespace CSharpUsefulExtensions
         public static DateTime WithTime(this DateTime dateTime, int hour = 0, int minute = 0, int second = 0, int millisecond = 0)
         {
             return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, minute, second, millisecond);
+        }
+
+        public static IEnumerable<DateTime> IterateDayByDayTo(this DateTime startDate, DateTime endDate)
+        {
+            if (startDate.Date > endDate.Date)
+                yield break;
+
+            DateTime initDate = startDate;
+            do
+            {
+                yield return initDate;
+                initDate = initDate.AddDays(1);
+            } while (initDate.Date <= endDate.Date);
         }
     }
 }
