@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CSharpUsefulExtensions
 {
@@ -35,12 +36,34 @@ namespace CSharpUsefulExtensions
             if (startDate.Date > endDate.Date)
                 yield break;
 
-            DateTime initDate = startDate;
+            DateTime day = startDate;
             do
             {
-                yield return initDate;
-                initDate = initDate.AddDays(1);
-            } while (initDate.Date <= endDate.Date);
+                yield return day;
+                day = day.AddDays(1);
+            } while (day.Date <= endDate.Date);
+        }
+
+        public static IEnumerable<DateTime> IterateDayByDayFor(this DateTime startDate, int numOfDays)
+        {
+            if (numOfDays < 0)
+                yield break;
+
+            DateTime day = startDate;
+                        
+            int i = 0;
+            do
+            {
+                yield return day;
+                day = day.AddDays(1);
+                i++;
+            } while (i < numOfDays);
+        }
+
+        public static bool IsWorkingDay(this DateTime date, IEnumerable<DateTime> holidays = null)
+        {
+            return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday
+                && (holidays == null || holidays.All(x => x.Date != x.Date));
         }
     }
 }

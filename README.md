@@ -92,3 +92,22 @@ var endDate = new DateTime(2018, 4, 7);
 var result = startDate.IterateDayByDayTo(endDate);
 // result = { new DateTime(2018, 4, 1), new DateTime(2018, 4, 2), new DateTime(2018, 4, 3), new DateTime(2018, 4, 4), new DateTime(2018, 4, 5), new DateTime(2018, 4, 6), new DateTime(2018, 4, 7) }
 ```
+
+* IterateDayByDayFor
+```
+var startDate = new DateTime(2018, 5, 2);
+int numOfDays = 7;
+var result = startDate.IterateDayByDayFor(numOfDays);
+// result = { new DateTime(2018, 5, 2), new DateTime(2018, 5, 3), new DateTime(2018, 5, 4), new DateTime(2018, 5, 5), new DateTime(2018, 5, 6), new DateTime(2018, 5, 7), new DateTime(2018, 5, 8) }
+```
+
+* IsWorkingDay
+```
+var date = new DateTime(2018, 5, 7);
+var result = date.IsWorkingDay(); // true
+
+var date = new DateTime(2018, 5, 7);
+var holidays = new[] { date };
+var result = date.IsWorkingDay(holidays); // false
+```
+

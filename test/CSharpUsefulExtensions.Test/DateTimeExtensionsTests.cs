@@ -117,5 +117,86 @@ namespace CSharpUsefulExtensions.Test
                 .And.ContainItemsAssignableTo<DateTime>();
         }
 
+        [Test]
+        public void IterateDayByDayFor_NumOfDaysIsNegative_ShouldReturnEmpty()
+        {
+            var startDate = new DateTime(2018, 5, 2);
+            int numOfDays = -7;
+            
+            var result = startDate.IterateDayByDayFor(numOfDays);
+
+            result.Should().BeEmpty();
+        }
+
+        [Test]
+        public void IterateDayByDayFor_NumOfDaysEquals0_ShouldReturn1Day()
+        {
+            var startDate = new DateTime(2018, 5, 2);
+            int numOfDays = 0;
+
+            var result = startDate.IterateDayByDayFor(numOfDays);
+
+            result.Should().NotBeEmpty()
+               .And.HaveCount(1)
+               .And.ContainInOrder(new[] { new DateTime(2018, 5, 2) })
+               .And.ContainItemsAssignableTo<DateTime>();
+        }
+
+        [Test]
+        public void IterateDayByDayFor_NumOfDaysEquals7_ShouldReturn7Days()
+        {
+            var startDate = new DateTime(2018, 5, 2);
+            int numOfDays = 7;
+
+            var result = startDate.IterateDayByDayFor(numOfDays);
+
+            result.Should().NotBeEmpty()
+               .And.HaveCount(7)
+               .And.ContainInOrder(new[] { new DateTime(2018, 5, 2), new DateTime(2018, 5, 3), new DateTime(2018, 5, 4), new DateTime(2018, 5, 5),
+                    new DateTime(2018, 5, 6), new DateTime(2018, 5, 7), new DateTime(2018, 5, 8) })
+               .And.ContainItemsAssignableTo<DateTime>();
+        }
+
+        [Test]
+        public void IsWorkingDay_MondayDateWithNullHolidaysList_ShouldReturnTrue()
+        {
+            var date = new DateTime(2018, 5, 7);
+
+            var result = date.IsWorkingDay();
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsWorkingDay_SundayDateWithNullHolidaysList_ShouldReturnFalse()
+        {
+            var date = new DateTime(2018, 5, 6);
+
+            var result = date.IsWorkingDay();
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsWorkingDay_SaturdayDateWithNullHolidaysList_ShouldReturnFalse()
+        {
+            var date = new DateTime(2018, 5, 5);
+
+            var result = date.IsWorkingDay();
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsWorkingDay_MondayDateWithHolidayInThisDay_ShouldReturnFalse()
+        {
+            var date = new DateTime(2018, 5, 7);
+            var holidays = new[] { date };
+
+            var result = date.IsWorkingDay(holidays);
+
+            result.Should().BeFalse();
+        }
+
     }
 }
