@@ -60,10 +60,20 @@ namespace CSharpUsefulExtensions
             } while (i < numOfDays);
         }
 
-        public static bool IsWorkingDay(this DateTime date, IEnumerable<DateTime> holidays = null)
+        public static bool IsWorkingDay(this DateTime date)
         {
-            return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday
-                && (holidays == null || holidays.All(x => x.Date != x.Date));
+            return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday;
         }
-    }
+
+        public static bool IsWorkingDayWithHolidayChecking(this DateTime date, IEnumerable<DateTime> holidays)
+        {
+            if (holidays == null)
+                throw new ArgumentNullException("holidays");
+
+            if (holidays.Count() == 0)
+                throw new ArgumentException("List with holidays cannot be empty.", "holidays");
+
+            return IsWorkingDay(date) && holidays.All(x => x.Date != x.Date);
+        }
+    }   
 }

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace CSharpUsefulExtensions.Test
 {
@@ -157,20 +158,25 @@ namespace CSharpUsefulExtensions.Test
                .And.ContainItemsAssignableTo<DateTime>();
         }
 
-        [Test]
-        public void IsWorkingDay_MondayDateWithNullHolidaysList_ShouldReturnTrue()
+        [TestCase(2018, 5, 7)]
+        [TestCase(2018, 5, 8)]
+        [TestCase(2018, 5, 9)]
+        [TestCase(2018, 5, 10)]
+        [TestCase(2018, 5, 11)]
+        public void IsWorkingDay_DateFromMondayToFriday_ShouldReturnTrue(int year, int month, int day)
         {
-            var date = new DateTime(2018, 5, 7);
+            var date = new DateTime(year, month, day);
 
             var result = date.IsWorkingDay();
 
             result.Should().BeTrue();
         }
 
-        [Test]
-        public void IsWorkingDay_SundayDateWithNullHolidaysList_ShouldReturnFalse()
+        [TestCase(2018, 5, 5)]
+        [TestCase(2018, 5, 6)]
+        public void IsWorkingDay_DateSaturdayAndSunday_ShouldReturnFalse(int year, int month, int day)
         {
-            var date = new DateTime(2018, 5, 6);
+            var date = new DateTime(year, month, day);
 
             var result = date.IsWorkingDay();
 
@@ -178,22 +184,32 @@ namespace CSharpUsefulExtensions.Test
         }
 
         [Test]
-        public void IsWorkingDay_SaturdayDateWithNullHolidaysList_ShouldReturnFalse()
+        public void IsWorkingDayWithHolidayChecking_NullHolidaysList_ShouldReturnArgumentNullException()
         {
-            var date = new DateTime(2018, 5, 5);
-
-            var result = date.IsWorkingDay();
-
-            result.Should().BeFalse();
+            var date = new DateTime(2018, 5, 7);
+            List<DateTime> holidays = null;
+            
+            date.Invoking(d => d.IsWorkingDayWithHolidayChecking(holidays))
+                .Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("holidays");            
         }
 
         [Test]
-        public void IsWorkingDay_MondayDateWithHolidayInThisDay_ShouldReturnFalse()
+        public void IsWorkingDayWithHolidayChecking_EmptyHolidaysList_ShouldReturnArgumentException()
+        {
+            var date = new DateTime(2018, 5, 7);
+            List<DateTime> holidays = new List<DateTime>();
+
+            date.Invoking(d => d.IsWorkingDayWithHolidayChecking(holidays))
+                .Should().Throw<ArgumentException>().And.ParamName.Should().Be("holidays");
+        }
+
+        [Test]
+        public void IsWorkingDayWithHolidayChecking_MondayDateWithHolidayInThisDay_ShouldReturnFalse()
         {
             var date = new DateTime(2018, 5, 7);
             var holidays = new[] { date };
 
-            var result = date.IsWorkingDay(holidays);
+            var result = date.IsWorkingDayWithHolidayChecking(holidays);
 
             result.Should().BeFalse();
         }

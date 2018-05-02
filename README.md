@@ -105,9 +105,12 @@ var result = startDate.IterateDayByDayFor(numOfDays);
 ```
 var date = new DateTime(2018, 5, 7);
 var result = date.IsWorkingDay(); // true
+```
 
+* IsWorkingDayWithHolidayChecking
+```
 var date = new DateTime(2018, 5, 7);
 var holidays = new[] { date };
-var result = date.IsWorkingDay(holidays); // false
+var result = date.IsWorkingDayWithHolidayChecking(holidays); // false
 ```
 
