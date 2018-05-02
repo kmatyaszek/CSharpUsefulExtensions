@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 
 namespace CSharpUsefulExtensions
 {
@@ -34,6 +36,17 @@ namespace CSharpUsefulExtensions
             if (value.StartsWith(prefix, stringComparison)) return value;
 
             return prefix + value;
+        }
+
+        public static MemoryStream ToStream(this string value, Encoding encoding)
+        {
+            if (string.IsNullOrEmpty(value))
+                throw new ArgumentException("String value cannot be empty.", "value");
+
+            if (encoding == null)
+                throw new ArgumentNullException("encoding");
+
+            return new MemoryStream(encoding.GetBytes(value));
         }
     }
 }

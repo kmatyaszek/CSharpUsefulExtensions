@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
+using System.Text;
 
 namespace CSharpUsefulExtensions.Test
 {
@@ -253,6 +255,43 @@ namespace CSharpUsefulExtensions.Test
             var result = value.PrependIfMissing(prefix);
 
             result.Should().BeEquivalentTo(prefix + value);
+        }
+
+        [Test]
+        public void ToStream_EmptyString_ShouldThrowArgumentException()
+        {
+            var myString = "";
+            Encoding encoding = Encoding.UTF8;
+
+            myString.Invoking(s => s.ToStream(encoding))
+                .Should().Throw<ArgumentException>()
+                .And.ParamName.Should().Be("value");
+        }
+
+        [Test]
+        public void ToStream_NullEncoding_ShouldThrowArgumentNullException()
+        {
+            var myString = "myString";
+            Encoding encoding = null;
+
+            myString.Invoking(s => s.ToStream(encoding))
+                .Should().Throw<ArgumentNullException>()
+                .And.ParamName.Should().Be("encoding");
+        }
+
+        [Test]
+        public void ToStream_UTF8ValuemyString_ShouldReturnStreamLengthEquals8()
+        {
+            var myString = "myString";
+            Encoding encoding = Encoding.UTF8;
+            long streamLength;
+
+            using (var stream = myString.ToStream(encoding))
+            {
+                streamLength = stream.Length;
+            }
+
+            streamLength.Should().Be(8);         
         }
 
     }

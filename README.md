@@ -28,6 +28,16 @@ This library is a collection of useful extension methods in C#.
 "my_string".PrependIfMissing("MyPrefix") = "MyPrefixmy_string"
 ```
 
+* ToStream
+```
+var myString = "myString";
+
+using (var stream = myString.ToStream(Encoding.UTF8))
+{
+    ...
+}
+```
+
 ### StringBuilder methods:
 * IsEmpty
 ```
