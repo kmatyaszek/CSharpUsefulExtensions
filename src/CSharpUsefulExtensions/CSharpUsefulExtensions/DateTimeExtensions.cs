@@ -75,5 +75,49 @@ namespace CSharpUsefulExtensions
 
             return IsWorkingDay(date) && holidays.All(x => x.Date != x.Date);
         }
-    }   
+
+        public static IEnumerable<DateTimeRange> GetRanges(this IEnumerable<DateTime> source)
+        {
+            if (source == null || source.Count() == 0) yield break;
+
+            var sortedSource = source.OrderBy(d => d).ToList();
+
+            DateTime startDate, endDate, day;            
+            startDate = endDate = day = sortedSource.First();
+
+            for (int i = 1; i < sortedSource.Count;)
+            {
+                day = day.AddDays(1);
+                if(sortedSource.Contains(day))
+                {
+                    endDate = day;
+                    i++;
+                }
+                else
+                {
+                    yield return DateTimeRange.Of(startDate, endDate);
+                    startDate = endDate = day = sortedSource[i++];
+                }
+            }
+
+            yield return DateTimeRange.Of(startDate, endDate);
+        }
+    }
+
+    public class DateTimeRange
+    {
+        private DateTimeRange(DateTime startDateTime, DateTime endDateTime)
+        {
+            StartDateTime = startDateTime;
+            EndDateTime = endDateTime;
+        }
+
+        public static DateTimeRange Of(DateTime startDateTime, DateTime endDateTime)
+        {
+            return new DateTimeRange(startDateTime, endDateTime);
+        }
+
+        public DateTime StartDateTime { get; private set; }
+        public DateTime EndDateTime { get; private set; }
+    }
 }

@@ -214,5 +214,80 @@ namespace CSharpUsefulExtensions.Test
             result.Should().BeFalse();
         }
 
+        [Test]
+        public void GetRanges_NullSource_ShouldReturnEmptyList()
+        {
+            IEnumerable<DateTime> source = null;
+
+            var result = source.GetRanges();
+
+            result.Should().BeEmpty();
+        }
+
+        [Test]
+        public void GetRanges_SourceWithOneDay_ShouldReturnListWithOneItem()
+        {
+            DateTime dateTime = new DateTime(2018, 5, 7);
+            IEnumerable<DateTime> source = new List<DateTime>() { dateTime };
+
+            var result = source.GetRanges();
+
+            result.Should().NotBeEmpty()
+                    .And.HaveCount(1)
+                    .And.OnlyContain(x => x.StartDateTime == dateTime && x.EndDateTime == dateTime);
+        }
+
+        [Test]
+        public void GetRanges_SourceWithTwoNotContinuousDays_ShouldReturnListWithTwoItems()
+        {
+            DateTime firstDate = new DateTime(2018, 5, 7);
+            DateTime secondDate = new DateTime(2018, 5, 10);
+            IEnumerable<DateTime> source = new List<DateTime>() { firstDate, secondDate };
+
+            var result = source.GetRanges();
+
+            result.Should().NotBeEmpty()
+                    .And.HaveCount(2)
+                    .And.Contain(x => x.StartDateTime == firstDate && x.EndDateTime == firstDate)
+                    .And.Contain(x => x.StartDateTime == secondDate && x.EndDateTime == secondDate);
+        }
+
+        [Test]
+        public void GetRanges_SourceWithThreeContinuousDays_ShouldReturnListWithOneItem()
+        {
+            DateTime firstDay = new DateTime(2018, 5, 7);
+            DateTime secondDay = new DateTime(2018, 5, 8);
+            DateTime thirdDay = new DateTime(2018, 5, 9);
+            IEnumerable<DateTime> source = new List<DateTime>() { firstDay, secondDay, thirdDay };
+
+            var result = source.GetRanges();
+
+            result.Should().NotBeEmpty()
+                    .And.HaveCount(1)
+                    .And.Contain(x => x.StartDateTime == firstDay && x.EndDateTime == thirdDay);
+        }
+
+        [Test]
+        public void GetRanges_SourceWithTwoNotContinuousRanges_ShouldReturnListWithTwoItems()
+        {
+            DateTime firstDayFirstRange = new DateTime(2018, 5, 7);
+            DateTime secondDayFirstRange = new DateTime(2018, 5, 8);
+            DateTime thirdDayFirstRange = new DateTime(2018, 5, 9);
+            DateTime firstDaySecondRange = new DateTime(2018, 6, 7);
+            DateTime secondDaySecondRange = new DateTime(2018, 6, 8);
+            DateTime thirdDaySecondRange = new DateTime(2018, 6, 9);
+            DateTime fourthDaySecondRange = new DateTime(2018, 6, 10);
+            DateTime fifthDaySecondRange = new DateTime(2018, 6, 11);
+
+            IEnumerable<DateTime> source = new List<DateTime>() { firstDayFirstRange, secondDayFirstRange, thirdDayFirstRange,
+                        firstDaySecondRange, secondDaySecondRange, thirdDaySecondRange, fourthDaySecondRange, fifthDaySecondRange };
+
+            var result = source.GetRanges();
+
+            result.Should().NotBeEmpty()
+                    .And.HaveCount(2)
+                    .And.Contain(x => x.StartDateTime == firstDayFirstRange && x.EndDateTime == thirdDayFirstRange)
+                    .And.Contain(x => x.StartDateTime == firstDaySecondRange && x.EndDateTime == fifthDaySecondRange);
+        }
     }
 }
