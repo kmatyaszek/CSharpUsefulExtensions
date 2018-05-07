@@ -124,3 +124,17 @@ var holidays = new[] { date };
 var result = date.IsWorkingDayWithHolidayChecking(holidays); // false
 ```
 
+### Argument checking:
+
+* ThrowIfNull
+```
+string nulParameter = null;
+string notNullParameter = "parameter";
+
+nulParameter.ThrowIfNull(); // throw new ArgumentNullException();
+nulParameter.ThrowIfNull("param"); // throw new ArgumentNullException("param");
+nulParameter.ThrowIfNull("param", "Exception message"); // throw new ArgumentNullException("param", "Exception message");
+nulParameter.ThrowIfNull(() => nulParameter); // throw new ArgumentNullException("nulParameter");
+nulParameter.ThrowIfNull(() => nulParameter, "Exception message"); // throw new ArgumentNullException("nulParameter", "Exception message");
+notNullParameter.ThrowIfNull(); // ArgumentNullException is not thrown
+```
