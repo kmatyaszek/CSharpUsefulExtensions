@@ -215,6 +215,26 @@ namespace CSharpUsefulExtensions.Test
         }
 
         [Test]
+        public void NextDay_GivenDateTime_ShouldReturnGivenDateTimePlusOneDay()
+        {
+            var dateTime = new DateTime(2018, 5, 8);
+
+            var result = dateTime.NextDay();
+
+            result.Should().Be(new DateTime(2018, 5, 9));
+        }
+
+        [Test]
+        public void PreviousDay_GivenDateTime_ShouldReturnGivenDateTimeMinusOneDay()
+        {
+            var dateTime = new DateTime(2018, 5, 8);
+
+            var result = dateTime.PreviousDay();
+
+            result.Should().Be(new DateTime(2018, 5, 7));
+        }
+
+        [Test]
         public void GetRanges_NullSource_ShouldReturnEmptyList()
         {
             IEnumerable<DateTime> source = null;

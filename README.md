@@ -71,27 +71,37 @@ var isEmpty = guid.IsEmpty(); // isEmpty = true
 ### DateTime methods:
 * FirstDayOfTheMonth
 ```
-new DateTime(2018, 4, 23, 15, 15, 15, 15).FirstDayOfTheMonth() = DateTime(2018, 4, 1, 15, 15, 15, 15)
+new DateTime(2018, 4, 23, 15, 15, 15, 15).FirstDayOfTheMonth() // DateTime(2018, 4, 1, 15, 15, 15, 15)
 ```
 
 * FirstDayOfTheMonthWithTime
 ```
-new DateTime(2018, 4, 23, 15, 15, 15, 15).FirstDayOfTheMonthWithTime(12, 12, 12, 12) = DateTime(2018, 4, 1, 12, 12, 12, 12)
+new DateTime(2018, 4, 23, 15, 15, 15, 15).FirstDayOfTheMonthWithTime(12, 12, 12, 12) // DateTime(2018, 4, 1, 12, 12, 12, 12)
 ```
 
 * LastDayOfTheMonth
 ```
-new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonth() = DateTime(2018, 4, 30, 15, 15, 15, 15)
+new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonth() // DateTime(2018, 4, 30, 15, 15, 15, 15)
 ```
 
 * LastDayOfTheMonthWithTime
 ```
-new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonthWithTime(12, 12, 12, 12) = DateTime(2018, 4, 30, 12, 12, 12, 12)
+new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonthWithTime(12, 12, 12, 12) // DateTime(2018, 4, 30, 12, 12, 12, 12)
 ```
 
 * WithTime
 ```
-new DateTime(2018, 4, 24, 20, 07, 32).WithTime(21, 15, 10) = DateTime(2018, 4, 24, 21, 15, 10)
+new DateTime(2018, 4, 24, 20, 07, 32).WithTime(21, 15, 10) // DateTime(2018, 4, 24, 21, 15, 10)
+```
+
+* NextDay
+```
+new DateTime(2018, 5, 8).NextDay() // new DateTime(2018, 5, 9)
+```
+
+* PreviousDay
+```
+new DateTime(2018, 5, 8).PreviousDay() // new DateTime(2018, 5, 7)
 ```
 
 * IterateDayByDayTo
