@@ -31,6 +31,16 @@ namespace CSharpUsefulExtensions
             return new DateTime(dateTime.Year, dateTime.Month, dateTime.Day, hour, minute, second, millisecond);
         }
 
+        public static DateTime NextDay(this DateTime dateTime)
+        {
+            return dateTime.AddDays(1);
+        }
+
+        public static DateTime PreviousDay(this DateTime dateTime)
+        {
+            return dateTime.AddDays(-1);
+        }
+
         public static IEnumerable<DateTime> IterateDayByDayTo(this DateTime startDate, DateTime endDate)
         {
             if (startDate.Date > endDate.Date)
@@ -40,7 +50,7 @@ namespace CSharpUsefulExtensions
             do
             {
                 yield return day;
-                day = day.AddDays(1);
+                day = day.NextDay();
             } while (day.Date <= endDate.Date);
         }
 
@@ -55,7 +65,7 @@ namespace CSharpUsefulExtensions
             do
             {
                 yield return day;
-                day = day.AddDays(1);
+                day = day.NextDay();
                 i++;
             } while (i < numOfDays);
         }
@@ -75,5 +85,54 @@ namespace CSharpUsefulExtensions
 
             return IsWorkingDay(date) && holidays.All(x => x.Date != x.Date);
         }
-    }   
+
+        public static IEnumerable<DateTimeRange> GetContinuousDaysRange(this IEnumerable<DateTime> source)
+        {
+            if (source == null || source.Count() == 0) yield break;
+
+            var sortedSource = source.OrderBy(d => d).ToList();
+
+            DateTime startDate, endDate, day;            
+            startDate = endDate = day = sortedSource.First();
+
+            for (int i = 1; i < sortedSource.Count; i++)
+            {
+                if(endDate.Date == sortedSource[i].Date)
+                {
+                    endDate = sortedSource[i];
+                    continue;
+                }
+
+                day = day.NextDay();
+                if(sortedSource.Any(d => d.Date == day.Date))
+                {
+                    endDate = day;
+                }
+                else
+                {
+                    yield return DateTimeRange.Of(startDate, endDate);
+                    startDate = endDate = day = sortedSource[i];
+                }
+            }
+
+            yield return DateTimeRange.Of(startDate, endDate);
+        }
+    }
+
+    public class DateTimeRange
+    {
+        private DateTimeRange(DateTime startDateTime, DateTime endDateTime)
+        {
+            StartDateTime = startDateTime;
+            EndDateTime = endDateTime;
+        }
+
+        public static DateTimeRange Of(DateTime startDateTime, DateTime endDateTime)
+        {
+            return new DateTimeRange(startDateTime, endDateTime);
+        }
+
+        public DateTime StartDateTime { get; private set; }
+        public DateTime EndDateTime { get; private set; }
+    }
 }

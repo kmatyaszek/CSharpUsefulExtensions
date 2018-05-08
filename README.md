@@ -71,27 +71,37 @@ var isEmpty = guid.IsEmpty(); // isEmpty = true
 ### DateTime methods:
 * FirstDayOfTheMonth
 ```
-new DateTime(2018, 4, 23, 15, 15, 15, 15).FirstDayOfTheMonth() = DateTime(2018, 4, 1, 15, 15, 15, 15)
+new DateTime(2018, 4, 23, 15, 15, 15, 15).FirstDayOfTheMonth() // DateTime(2018, 4, 1, 15, 15, 15, 15)
 ```
 
 * FirstDayOfTheMonthWithTime
 ```
-new DateTime(2018, 4, 23, 15, 15, 15, 15).FirstDayOfTheMonthWithTime(12, 12, 12, 12) = DateTime(2018, 4, 1, 12, 12, 12, 12)
+new DateTime(2018, 4, 23, 15, 15, 15, 15).FirstDayOfTheMonthWithTime(12, 12, 12, 12) // DateTime(2018, 4, 1, 12, 12, 12, 12)
 ```
 
 * LastDayOfTheMonth
 ```
-new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonth() = DateTime(2018, 4, 30, 15, 15, 15, 15)
+new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonth() // DateTime(2018, 4, 30, 15, 15, 15, 15)
 ```
 
 * LastDayOfTheMonthWithTime
 ```
-new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonthWithTime(12, 12, 12, 12) = DateTime(2018, 4, 30, 12, 12, 12, 12)
+new DateTime(2018, 4, 23, 15, 15, 15, 15).LastDayOfTheMonthWithTime(12, 12, 12, 12) // DateTime(2018, 4, 30, 12, 12, 12, 12)
 ```
 
 * WithTime
 ```
-new DateTime(2018, 4, 24, 20, 07, 32).WithTime(21, 15, 10) = DateTime(2018, 4, 24, 21, 15, 10)
+new DateTime(2018, 4, 24, 20, 07, 32).WithTime(21, 15, 10) // DateTime(2018, 4, 24, 21, 15, 10)
+```
+
+* NextDay
+```
+new DateTime(2018, 5, 8).NextDay() // new DateTime(2018, 5, 9)
+```
+
+* PreviousDay
+```
+new DateTime(2018, 5, 8).PreviousDay() // new DateTime(2018, 5, 7)
 ```
 
 * IterateDayByDayTo
@@ -122,6 +132,39 @@ var result = date.IsWorkingDay(); // true
 var date = new DateTime(2018, 5, 7);
 var holidays = new[] { date };
 var result = date.IsWorkingDayWithHolidayChecking(holidays); // false
+```
+
+* GetContinuousDaysRange
+```
+
+public static IEnumerable<DateTimeRange> GetContinuousDaysRange(this IEnumerable<DateTime> source) {...}
+
+public class DateTimeRange
+{
+    private DateTimeRange(DateTime startDateTime, DateTime endDateTime)
+    {
+        StartDateTime = startDateTime;
+        EndDateTime = endDateTime;
+    }
+
+    public static DateTimeRange Of(DateTime startDateTime, DateTime endDateTime)
+    {
+        return new DateTimeRange(startDateTime, endDateTime);
+    }
+
+    public DateTime StartDateTime { get; private set; }
+    public DateTime EndDateTime { get; private set; }
+}
+
+Example:
+
+DateTime firstDay = new DateTime(2018, 5, 7);
+DateTime secondDay = new DateTime(2018, 5, 8);
+DateTime thirdDay = new DateTime(2018, 5, 9);
+IEnumerable<DateTime> source = new List<DateTime>() { firstDay, secondDay, thirdDay };
+
+var result = source.GetContinuousDaysRange(); 
+// result is enumeration with one item  DateTimeRange.Of(new DateTime(2018, 5, 7), new DateTime(2018, 5, 9))
 ```
 
 ### Argument checking:
