@@ -134,6 +134,39 @@ var holidays = new[] { date };
 var result = date.IsWorkingDayWithHolidayChecking(holidays); // false
 ```
 
+* GetContinuousDaysRange
+```
+
+public static IEnumerable<DateTimeRange> GetContinuousDaysRange(this IEnumerable<DateTime> source) {...}
+
+public class DateTimeRange
+{
+    private DateTimeRange(DateTime startDateTime, DateTime endDateTime)
+    {
+        StartDateTime = startDateTime;
+        EndDateTime = endDateTime;
+    }
+
+    public static DateTimeRange Of(DateTime startDateTime, DateTime endDateTime)
+    {
+        return new DateTimeRange(startDateTime, endDateTime);
+    }
+
+    public DateTime StartDateTime { get; private set; }
+    public DateTime EndDateTime { get; private set; }
+}
+
+Example:
+
+DateTime firstDay = new DateTime(2018, 5, 7);
+DateTime secondDay = new DateTime(2018, 5, 8);
+DateTime thirdDay = new DateTime(2018, 5, 9);
+IEnumerable<DateTime> source = new List<DateTime>() { firstDay, secondDay, thirdDay };
+
+var result = source.GetContinuousDaysRange(); 
+// result is enumeration with one item  DateTimeRange.Of(new DateTime(2018, 5, 7), new DateTime(2018, 5, 9))
+```
+
 ### Argument checking:
 
 * ThrowIfNull

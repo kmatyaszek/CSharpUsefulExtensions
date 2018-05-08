@@ -86,7 +86,7 @@ namespace CSharpUsefulExtensions
             return IsWorkingDay(date) && holidays.All(x => x.Date != x.Date);
         }
 
-        public static IEnumerable<DateTimeRange> GetRanges(this IEnumerable<DateTime> source)
+        public static IEnumerable<DateTimeRange> GetContinuousDaysRange(this IEnumerable<DateTime> source)
         {
             if (source == null || source.Count() == 0) yield break;
 
@@ -97,8 +97,14 @@ namespace CSharpUsefulExtensions
 
             for (int i = 1; i < sortedSource.Count; i++)
             {
+                if(endDate.Date == sortedSource[i].Date)
+                {
+                    endDate = sortedSource[i];
+                    continue;
+                }
+
                 day = day.NextDay();
-                if(sortedSource.Contains(day))
+                if(sortedSource.Any(d => d.Date == day.Date))
                 {
                     endDate = day;
                 }
