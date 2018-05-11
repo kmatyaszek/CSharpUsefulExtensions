@@ -48,5 +48,15 @@ namespace CSharpUsefulExtensions
 
             return new MemoryStream(encoding.GetBytes(value));
         }
+
+        public static string Reverse(this string value)
+        {
+            if (value == null)
+                throw new ArgumentNullException("value");
+
+            var array = value.ToCharArray();
+            Array.Reverse(array);
+            return new string(array);
+        }
     }
 }

@@ -294,5 +294,23 @@ namespace CSharpUsefulExtensions.Test
             streamLength.Should().Be(8);         
         }
 
+        [Test]
+        public void Reverse_NullString_ShouldThrowArgumentNullEception()
+        {
+            string value = null;
+
+            value.Invoking(s => s.Reverse())
+                .Should().Throw<ArgumentNullException>()
+                .And.ParamName.Should().Be("value");
+        }
+
+        [TestCase("", "")]
+        [TestCase("a", "a")]
+        [TestCase("abcd", "dcba")]
+        [TestCase("12345", "54321")]
+        public void Reverse_GivenString_ShouldReturnReversedString(string value, string result)
+        {
+            value.Reverse().Should().Be(result);
+        }
     }
 }

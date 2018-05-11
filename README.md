@@ -38,6 +38,12 @@ using (var stream = myString.ToStream(Encoding.UTF8))
 }
 ```
 
+* Reverse
+```
+var myString = "12345";
+myString.Reverse() // "54321"
+```
+
 ### StringBuilder methods:
 * IsEmpty
 ```
