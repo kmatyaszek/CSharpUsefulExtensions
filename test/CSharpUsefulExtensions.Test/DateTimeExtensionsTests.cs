@@ -340,5 +340,75 @@ namespace CSharpUsefulExtensions.Test
                     .And.Contain(x => x.StartDateTime == firstDayFirstRangeTime1 && x.EndDateTime == thirdDayFirstRangeTime3)
                     .And.Contain(x => x.StartDateTime == firstDaySecondRange && x.EndDateTime == fifthDaySecondRangeTime4);
         }
+
+        [Test]
+        public void IsToday_YesterdayDate_ShouldReturnFalse()
+        {
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+
+            var result = yesterday.IsToday();
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsToday_TomorrowDate_ShouldReturnFalse()
+        {
+            DateTime tomorrow = DateTime.Now.AddDays(1);
+
+            var result = tomorrow.IsToday();
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsToday_TodayDate_ShouldReturnTrue()
+        {
+            DateTime today = DateTime.Now;
+
+            var result = today.IsToday();
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsPastDate_TodayDate_ShouldReturnFalse()
+        {
+            DateTime today = DateTime.Now;
+
+            var result = today.IsPastDate();
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsPastDate_YesterdayDate_ShouldReturnTrue()
+        {
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+
+            var result = yesterday.IsPastDate();
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void IsFutureDate_TodayDate_ShouldReturnFalse()
+        {
+            DateTime today = DateTime.Now;
+
+            var result = today.IsFutureDate();
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void IsFutureDate_TomorrowDate_ShouldReturnTrue()
+        {
+            DateTime tomorrow = DateTime.Now.AddDays(1);
+
+            var result = tomorrow.IsFutureDate();
+
+            result.Should().BeTrue();
+        }
     }
 }

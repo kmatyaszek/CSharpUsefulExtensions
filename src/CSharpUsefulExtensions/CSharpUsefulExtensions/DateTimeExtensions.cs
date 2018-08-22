@@ -75,6 +75,21 @@ namespace CSharpUsefulExtensions
             return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday;
         }
 
+        public static bool IsToday(this DateTime date)
+        {
+            return date.Date == DateTime.Now.Date;
+        }
+
+        public static bool IsPastDate(this DateTime date)
+        {
+            return date.Date < DateTime.Now.Date;
+        }
+
+        public static bool IsFutureDate(this DateTime date)
+        {
+            return date.Date > DateTime.Now.Date; 
+        }
+
         public static bool IsWorkingDayWithHolidayChecking(this DateTime date, IEnumerable<DateTime> holidays)
         {
             if (holidays == null)
