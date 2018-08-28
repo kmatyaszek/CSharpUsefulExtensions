@@ -172,6 +172,23 @@ IEnumerable<DateTime> source = new List<DateTime>() { firstDay, secondDay, third
 var result = source.GetContinuousDaysRange(); 
 // result is enumeration with one item  DateTimeRange.Of(new DateTime(2018, 5, 7), new DateTime(2018, 5, 9))
 ```
+* IsToday
+```
+var tomorrow = DateTime.Now.AddDays(1);
+var result = tomorrow.IsToday(); // false
+```
+
+* IsPastDate
+```
+var today = DateTime.Now;
+var result = today.IsPastDate(); // false
+```
+
+* IsFutureDate
+```
+var today = DateTime.Now;
+var result = today.IsFutureDate(); // false
+```
 
 ### Argument checking:
 
